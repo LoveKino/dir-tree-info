@@ -61,7 +61,7 @@ let getFileLines = (file, nameHandler = id, depth = 0) => {
  *      path
  * }
  */
-let filesTree = (dir, depth = 0, name = '.', opts = {}) => {
+let filesTree = (dir, opts = {}, name = '.', depth = 0) => {
     let {
         maxDepth = 5, ignores = ['node_modules', '.git', '*.DS_Store', '*.swp', '*.swn', '.*']
     } = opts;
@@ -76,7 +76,7 @@ let filesTree = (dir, depth = 0, name = '.', opts = {}) => {
             return stat(filepath).then((stats) => {
                 if (stats.isDirectory()) {
                     let nextDepth = ++depth;
-                    return filesTree(filepath, nextDepth, file, opts);
+                    return filesTree(filepath, opts, file, nextDepth);
                 } else if (stats.isFile()) {
                     return {
                         name: file,
